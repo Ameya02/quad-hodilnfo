@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  app:
+    build: ./
+    ports:
+      - 3001:3001
+    volumes:
+      - .:/app
+    depends_on:
+      - dev-db
+    environment:
+      DB_USER: postgres
+      DB_NAME: wazirx
+      DB_PW: 123
+      DB_HOST: dev-db
+    command: "node app.js"
+    networks:
+      - quab
+  dev-db:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: wazirx
+    networks:
+      - quab
+networks:
+  quab:
